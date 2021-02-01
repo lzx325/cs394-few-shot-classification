@@ -39,7 +39,7 @@ class PureSequential(PureModule):
         self.submodules = submodules
         self.size = sum([s.size for s in submodules])
 
-    def forward(self, x: Tensor, params: Tensor):
+    def forward(self, x: Tensor, params: Tensor): 
         assert len(params) == self.size, f"Wrong size: {params.shape}, expected: {self.size}"
 
         params_remaining = params
@@ -53,7 +53,7 @@ class PureSequential(PureModule):
         return x
 
     def get_initial_params(self):
-        return torch.cat([m.get_initial_params() for m in self.submodules])
+        return torch.cat([m.get_initial_params() for m in self.submodules]) # all parameters are flattened
 
 
 class PureLinear(PureModule):

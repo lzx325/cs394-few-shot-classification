@@ -141,3 +141,4 @@ cython_debug/
 ######### CUSTOM GITIGNORE #########
 ####################################
 data/
+.vscode/

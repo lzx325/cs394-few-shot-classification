@@ -41,7 +41,7 @@ class FSLDataLoader:
         c, h, w = self.images[0][0].shape
 
         task_imgs = self.images[classes_to_use] # [num_classes_per_task, num_imgs_per_class, c, h, w]
-        task_labels = torch.arange(k).unsqueeze(1).repeat(1, num_imgs_per_class) # [num_classes_per_task, num_imgs_per_class]
+        task_labels = torch.arange(k).unsqueeze(1).repeat(1, num_imgs_per_class) # [num_classes_per_task, num_imgs_per_class] # task_labels are already per-episode class labels
 
         if shuffle_splits:
             task_imgs = task_imgs[:, self.rnd.permutation(task_imgs.shape[1])]
@@ -70,6 +70,11 @@ class FSLDataLoader:
         classes_order = classes_order.reshape(len(classes_order) // k, k) # [num_tasks, num_classes_per_task]
 
         return iter([self.construct_datasets_for_classes(cs) for cs in classes_order])
+
+        # len(retval): num_classes_total-num_classes_total%k
+        # retval[0]: (ds_train,ds_test)
+        # len(ds_train): K*N
+        # len(ds_test): K*(20-N)
 
     def __len__(self) -> int:
         return len(self.images) // self.config['training']['num_classes_per_task']

@@ -1,7 +1,7 @@
 import torch
 import numpy as np
 from typing import Dict
-
+from tqdm import tqdm
 
 DATA_CONFIG = {
     'root_dir': './data',
@@ -23,6 +23,7 @@ METHODS_CONFIGS = {
     'maml': {
         'name': 'maml',
         # TODO(maml): your maml hyperparams
+        'num_inner_steps':5,
     },
 }
 
@@ -34,19 +35,30 @@ TRAINING_CONFIG = {
         'optim_kwargs': {'lr': 0.001},
     },
     'pretrained_baseline': {
-        # TODO(pretrained_baseline): your pretrained_baseline hyperparams
+        'batch_size': 20,
+        'num_train_steps_per_episode': 50,
+        'num_train_episodes': 100,
+        'optim_kwargs': {'lr': 0.001},
     },
     'protonet': {
         # TODO(protonet): your pretrained_baseline hyperparams
+        'batch_size': 20,
+        'num_train_steps_per_episode': 50,
+        'num_train_episodes': 200,
+        'optim_kwargs': {'lr': 1e-3},
     },
     'maml': {
         # TODO(maml): your pretrained_baseline hyperparams
+        'batch_size':20,
+        'inner_lr':0.1,
+        'num_train_episodes':10000,
+        'optim_kwargs':{'lr':1e-3}
     },
 }
 
 COMMON_TRAINING_CONFIG = {
     'random_seed': 42,
-    'num_shots': 3, # TODO: this is what you may vary to have different K values
+    'num_shots': 9, # TODO: this is what you may vary to have different K values
     'num_classes_per_task': 5,
 }
 

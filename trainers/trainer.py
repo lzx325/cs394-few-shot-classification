@@ -31,10 +31,10 @@ class Trainer:
 
             x = x.to(self.config['device'])
             y = y.to(self.config['device'])
-
             logits = model(x) # [batch_size, num_classes_per_task]
             loss = F.cross_entropy(logits, y)
             acc = (logits.argmax(dim=1) == y).float().mean()
+            # print("iteration %d, loss=%.4f"%(it,loss.item()))
 
             optim.zero_grad()
             loss.backward()
@@ -72,7 +72,6 @@ class Trainer:
         curr_model = init_model(self.config).to(self.config['device'])
         curr_model.load_state_dict(self.model.state_dict())
         curr_optim = torch.optim.Adam(curr_model.parameters(), **self.config['training']['optim_kwargs'])
-
         train_scores = self.train_on_episode(curr_model, curr_optim, ds_train, ds_test)
         test_scores = self.compute_scores(curr_model, ds_test)
 
@@ -80,11 +79,9 @@ class Trainer:
 
     def train(self):
         episodes = tqdm(range(self.config['training']['num_train_episodes']))
-
         for ep in episodes:
             ds_train, ds_test = self.source_dataloader.sample_random_task()
-            ep_train_loss, ep_train_acc = self.train_on_episode(self.model, self.optim, ds_train, ds_test)
-
+            ep_train_loss, ep_train_acc = self.train_on_episode(self.model, self.optim, ds_train, ds_test) # ds_test is not used
             episodes.set_description(f'[Episode {ep: 03d}] Loss: {ep_train_loss: .3f}. Acc: {ep_train_acc: .03f}')
 
     def evaluate(self):
@@ -100,7 +97,6 @@ class Trainer:
             scores['test'].append(test_scores)
 
             episodes.set_description(f'[Test episode {ep: 03d}] Loss: {test_scores[0]: .3f}. Acc: {test_scores[1]: .03f}')
-
         for split in scores:
             split_scores = np.array(scores[split])
             print(f'[EVAL] Mean {split} loss: {split_scores[:, 0].mean(): .03f}.')

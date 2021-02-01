@@ -33,6 +33,7 @@ def fix_random_seed(seed: int):
 
 def run_experiment(method: str):
     config = construct_config(method)
+    print(config)
     fix_random_seed(config['training']['random_seed'])
     ds_train, ds_test = get_datasets(config)
     source_dl = FSLDataLoader(config, ds_train)
