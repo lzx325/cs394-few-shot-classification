@@ -18,12 +18,19 @@ METHODS_CONFIGS = {
     },
     'protonet': {
         'name': 'protonet',
-        # TODO(protonet): your protonet hyperparams
+        # TODO(protonet): your ProtNet hyperparams (if there are any)
     },
     'maml': {
         'name': 'maml',
         # TODO(maml): your maml hyperparams
+<<<<<<< HEAD
         'num_inner_steps':5,
+=======
+        'inner_loop_lr': 'TODO',
+        'num_inner_steps': 'TODO',
+        'ft_optim_kwargs': 'TODO',
+        # ... other MAML hyperparameters?
+>>>>>>> 64d4539f27c55bb8fa7b92415490061811888f91
     },
 }
 
@@ -35,6 +42,7 @@ TRAINING_CONFIG = {
         'optim_kwargs': {'lr': 0.001},
     },
     'pretrained_baseline': {
+<<<<<<< HEAD
         'batch_size': 20,
         'num_train_steps_per_episode': 50,
         'num_train_episodes': 100,
@@ -53,6 +61,30 @@ TRAINING_CONFIG = {
         'inner_lr':0.1,
         'num_train_episodes':10000,
         'optim_kwargs':{'lr':1e-3}
+=======
+        # TODO(pretrained_baseline): your pretrained_baseline hyperparams
+        'batch_size': 'TODO',
+        'num_train_steps_per_episode': 'TODO',
+        'num_train_episodes': 'TODO',
+        'optim_kwargs': 'TODO',
+        # ... other Pretrained Baseline hyperparameters?
+    },
+    'protonet': {
+        # TODO(protonet): your ProtoNet hyperparams
+        'batch_size': 'TODO',
+        'num_train_steps_per_episode': 'TODO',
+        'num_train_episodes': 'TODO',
+        'optim_kwargs': 'TODO',
+        # ... other ProtoNet hyperparameters?
+    },
+    'maml': {
+        # TODO(maml): your MAML hyperparams
+        'batch_size': 'TODO',
+        'num_train_steps_per_episode': 'TODO',
+        'num_train_episodes': 'TODO',
+        'optim_kwargs': 'TODO',
+        # ... other MAML hyperparameters?
+>>>>>>> 64d4539f27c55bb8fa7b92415490061811888f91
     },
 }
 
